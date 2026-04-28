@@ -3,105 +3,263 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Análise INSS</title>
+<title>Análise Previdenciária | PrevMais</title>
 
 <style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
-  font-family: Arial;
-  background: #0b1220;
-  color: white;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(0,180,120,.25), transparent 35%),
+    linear-gradient(135deg, #06111f, #0b1020 55%, #111111);
+  color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  padding: 22px;
 }
 
-.box {
-  background: #121a2f;
-  padding: 30px;
-  border-radius: 12px;
-  width: 350px;
-  text-align: center;
-}
-
-button {
-  display: block;
+.quiz-container {
   width: 100%;
-  margin: 10px 0;
-  padding: 12px;
-  border: none;
-  border-radius: 8px;
-  background: #facc15;
-  cursor: pointer;
-  font-weight: bold;
+  max-width: 620px;
+  background: rgba(255,255,255,.96);
+  color: #111827;
+  border-radius: 28px;
+  padding: 34px;
+  box-shadow: 0 30px 80px rgba(0,0,0,.35);
 }
 
-.hidden { display: none; }
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.logo-icon {
+  background: #ffbf00;
+  color: #111;
+  font-weight: 900;
+  padding: 10px 12px;
+  border-radius: 14px;
+  font-size: 22px;
+}
+
+.logo-text strong {
+  display: block;
+  font-size: 22px;
+}
+
+.logo-text span {
+  font-size: 12px;
+  color: #64748b;
+  font-weight: bold;
+  letter-spacing: .8px;
+}
+
+.badge {
+  display: inline-block;
+  background: #dcfce7;
+  color: #166534;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 18px;
+}
+
+.progress {
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 26px;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 25%;
+  background: linear-gradient(90deg, #ff9f00, #ffd000);
+  transition: .3s;
+}
+
+h1 {
+  font-size: 30px;
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+
+p {
+  color: #64748b;
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.option {
+  width: 100%;
+  border: 1px solid #e5e7eb;
+  background: #f8fafc;
+  padding: 18px;
+  border-radius: 16px;
+  margin-bottom: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.option:hover {
+  border-color: #ffbf00;
+  background: #fff8db;
+  transform: translateY(-2px);
+}
+
+.cta {
+  width: 100%;
+  background: linear-gradient(90deg, #ff9f00, #ffd000);
+  color: #111;
+  border: none;
+  padding: 18px;
+  border-radius: 16px;
+  font-size: 17px;
+  font-weight: 900;
+  cursor: pointer;
+  margin-top: 12px;
+}
+
+.hidden {
+  display: none;
+}
+
+.small {
+  font-size: 13px;
+  color: #94a3b8;
+  text-align: center;
+  margin-top: 16px;
+}
+
+.result-box {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  padding: 18px;
+  border-radius: 18px;
+  color: #166534;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+@media(max-width: 600px) {
+  .quiz-container {
+    padding: 24px;
+    border-radius: 22px;
+  }
+
+  h1 {
+    font-size: 25px;
+  }
+}
 </style>
 </head>
 
 <body>
 
-<div class="box">
+<div class="quiz-container">
 
-<div id="q1">
-<h2>Você já deu entrada no INSS?</h2>
-<button onclick="next('Sim')">Sim</button>
-<button onclick="next('Não')">Não</button>
-</div>
+  <div class="logo">
+    <div class="logo-icon">P+</div>
+    <div class="logo-text">
+      <strong>PrevMais</strong>
+      <span>ASSESSORIA PREVIDENCIÁRIA</span>
+    </div>
+  </div>
 
-<div id="q2" class="hidden">
-<h2>Qual sua situação?</h2>
-<button onclick="next('Benefício negado')">Benefício negado</button>
-<button onclick="next('Em análise')">Em análise</button>
-<button onclick="next('Acidente de trabalho')">Acidente de trabalho</button>
-</div>
+  <div class="badge">🔒 Análise rápida e confidencial</div>
 
-<div id="q3" class="hidden">
-<h2>Você possui laudo ou sequela?</h2>
-<button onclick="finish('Sim')">Sim</button>
-<button onclick="finish('Não')">Não</button>
-</div>
+  <div class="progress">
+    <div class="progress-bar" id="bar"></div>
+  </div>
 
-<div id="final" class="hidden">
-<h2>Pronto! Agora fale com um especialista</h2>
-<a id="wpp" target="_blank">
-<button>Falar no WhatsApp</button>
-</a>
-</div>
+  <div id="q1">
+    <h1>Você já deu entrada no benefício pelo INSS?</h1>
+    <p>Essa informação ajuda a entender se o seu caso ainda está em análise, foi negado ou pode seguir para uma nova etapa.</p>
+
+    <button class="option" onclick="next('Já dei entrada no INSS')">✅ Sim, já dei entrada</button>
+    <button class="option" onclick="next('Ainda não dei entrada')">📄 Ainda não dei entrada</button>
+  </div>
+
+  <div id="q2" class="hidden">
+    <h1>Qual situação mais parece com o seu caso?</h1>
+    <p>Escolha a opção mais próxima da sua realidade hoje.</p>
+
+    <button class="option" onclick="next('Auxílio-acidente')">🦾 Sofri acidente e fiquei com sequela ou limitação</button>
+    <button class="option" onclick="next('Acidente de trabalho')">⚠️ Foi acidente de trabalho</button>
+    <button class="option" onclick="next('Aposentadoria')">👵 Tenho dúvida, erro ou demora na aposentadoria</button>
+    <button class="option" onclick="next('Benefício negado ou travado')">❌ Meu benefício foi negado ou está travado</button>
+  </div>
+
+  <div id="q3" class="hidden">
+    <h1>Você possui algum documento médico ou decisão do INSS?</h1>
+    <p>Laudo, atestado, CAT, carta de indeferimento ou comprovante do pedido ajudam na análise inicial.</p>
+
+    <button class="option" onclick="next('Possui laudo ou documento')">✅ Sim, tenho documento</button>
+    <button class="option" onclick="next('Não possui documento ainda')">❌ Não tenho ainda</button>
+    <button class="option" onclick="next('Não sei informar')">🤔 Não sei informar</button>
+  </div>
+
+  <div id="q4" class="hidden">
+    <h1>Seu caso pode ser analisado pela nossa equipe</h1>
+
+    <div class="result-box">
+      Pré-análise concluída. Agora envie suas informações pelo WhatsApp para orientação inicial.
+    </div>
+
+    <a id="whatsapp" target="_blank">
+      <button class="cta">FALAR COM A PREVMAIS AGORA →</button>
+    </a>
+
+    <div class="small">
+      A análise inicial não garante concessão do benefício. Depende dos documentos e requisitos do caso.
+    </div>
+  </div>
 
 </div>
 
 <script>
 let respostas = [];
+let etapa = 1;
 
 function next(resposta) {
   respostas.push(resposta);
-  
-  if(respostas.length === 1){
-    document.getElementById('q1').classList.add('hidden');
-    document.getElementById('q2').classList.remove('hidden');
-  }
-  
-  else if(respostas.length === 2){
-    document.getElementById('q2').classList.add('hidden');
-    document.getElementById('q3').classList.remove('hidden');
+
+  document.getElementById('q' + etapa).classList.add('hidden');
+  etapa++;
+
+  document.getElementById('bar').style.width = (etapa * 25) + '%';
+
+  if (etapa < 4) {
+    document.getElementById('q' + etapa).classList.remove('hidden');
+  } else {
+    final();
   }
 }
 
-function finish(resposta) {
-  respostas.push(resposta);
+function final() {
+  const numero = "5547920030770";
 
-  let texto = "Olá, quero verificar meu caso do INSS:\n";
-  texto += "Entrada no INSS: " + respostas[0] + "\n";
-  texto += "Situação: " + respostas[1] + "\n";
-  texto += "Laudo/Sequela: " + respostas[2];
+  let texto = "Olá, quero fazer uma análise do meu caso pelo site da PrevMais.%0A%0A";
+  texto += "1. Entrada no INSS: " + respostas[0] + "%0A";
+  texto += "2. Situação: " + respostas[1] + "%0A";
+  texto += "3. Documentos: " + respostas[2];
 
-  let url = "https://wa.me/55SEUNUMERO?text=" + encodeURIComponent(texto);
-
-  document.getElementById('q3').classList.add('hidden');
-  document.getElementById('final').classList.remove('hidden');
-  document.getElementById('wpp').href = url;
+  document.getElementById('whatsapp').href = "https://wa.me/" + numero + "?text=" + texto;
+  document.getElementById('q4').classList.remove('hidden');
 }
 </script>
 
