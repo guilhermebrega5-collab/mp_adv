@@ -1,267 +1,512 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Análise Previdenciária | PrevMais</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PrevMais | Análise INSS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
 
-<style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 15% 15%, rgba(34,197,94,.22), transparent 30%),
+        radial-gradient(circle at 85% 20%, rgba(245,158,11,.18), transparent 28%),
+        linear-gradient(135deg, #020617 0%, #081426 55%, #020617 100%);
+      color: #fff;
+    }
 
-body {
-  font-family: Arial, sans-serif;
-  min-height: 100vh;
-  background:
-    radial-gradient(circle at top left, rgba(0,180,120,.25), transparent 35%),
-    linear-gradient(135deg, #06111f, #0b1020 55%, #111111);
-  color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 22px;
-}
+    .page {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px;
+    }
 
-.quiz-container {
-  width: 100%;
-  max-width: 620px;
-  background: rgba(255,255,255,.96);
-  color: #111827;
-  border-radius: 28px;
-  padding: 34px;
-  box-shadow: 0 30px 80px rgba(0,0,0,.35);
-}
+    .hero {
+      width: 100%;
+      max-width: 1180px;
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 34px;
+      align-items: center;
+    }
 
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 24px;
-}
+    .left { padding: 24px 0; }
 
-.logo-icon {
-  background: #ffbf00;
-  color: #111;
-  font-weight: 900;
-  padding: 10px 12px;
-  border-radius: 14px;
-  font-size: 22px;
-}
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 34px;
+      font-weight: 900;
+      font-size: 25px;
+      letter-spacing: -.5px;
+    }
 
-.logo-text strong {
-  display: block;
-  font-size: 22px;
-}
+    .brand-mark {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #f59e0b, #facc15);
+      color: #07111f;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      box-shadow: 0 14px 35px rgba(245,158,11,.28);
+    }
 
-.logo-text span {
-  font-size: 12px;
-  color: #64748b;
-  font-weight: bold;
-  letter-spacing: .8px;
-}
+    .brand small {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      color: #93a4bd;
+      letter-spacing: .8px;
+      margin-top: 2px;
+      text-transform: uppercase;
+    }
 
-.badge {
-  display: inline-block;
-  background: #dcfce7;
-  color: #166534;
-  padding: 8px 14px;
-  border-radius: 999px;
-  font-weight: bold;
-  font-size: 14px;
-  margin-bottom: 18px;
-}
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(34,197,94,.14);
+      border: 1px solid rgba(34,197,94,.35);
+      color: #bbf7d0;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
 
-.progress {
-  height: 8px;
-  background: #e5e7eb;
-  border-radius: 999px;
-  overflow: hidden;
-  margin-bottom: 26px;
-}
+    h1 {
+      max-width: 650px;
+      font-size: clamp(38px, 5.4vw, 70px);
+      line-height: .98;
+      letter-spacing: -2.6px;
+      margin-bottom: 22px;
+      font-weight: 900;
+    }
 
-.progress-bar {
-  height: 100%;
-  width: 25%;
-  background: linear-gradient(90deg, #ff9f00, #ffd000);
-  transition: .3s;
-}
+    .gold { color: #fbbf24; }
+    .green { color: #22c55e; }
 
-h1 {
-  font-size: 30px;
-  line-height: 1.15;
-  margin-bottom: 12px;
-}
+    .lead {
+      max-width: 560px;
+      font-size: 20px;
+      line-height: 1.55;
+      color: #d5dfec;
+      margin-bottom: 28px;
+    }
 
-p {
-  color: #64748b;
-  line-height: 1.5;
-  margin-bottom: 24px;
-}
+    .trust-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      max-width: 650px;
+      margin-top: 28px;
+    }
 
-.option {
-  width: 100%;
-  border: 1px solid #e5e7eb;
-  background: #f8fafc;
-  padding: 18px;
-  border-radius: 16px;
-  margin-bottom: 12px;
-  font-size: 16px;
-  font-weight: 700;
-  text-align: left;
-  cursor: pointer;
-  transition: .2s;
-}
+    .trust {
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 18px;
+      padding: 16px;
+      backdrop-filter: blur(10px);
+      min-height: 104px;
+    }
 
-.option:hover {
-  border-color: #ffbf00;
-  background: #fff8db;
-  transform: translateY(-2px);
-}
+    .trust b {
+      display: block;
+      color: #fff;
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
 
-.cta {
-  width: 100%;
-  background: linear-gradient(90deg, #ff9f00, #ffd000);
-  color: #111;
-  border: none;
-  padding: 18px;
-  border-radius: 16px;
-  font-size: 17px;
-  font-weight: 900;
-  cursor: pointer;
-  margin-top: 12px;
-}
+    .trust span {
+      color: #aab8cc;
+      font-size: 13px;
+      line-height: 1.35;
+    }
 
-.hidden {
-  display: none;
-}
+    .card-wrap { position: relative; }
 
-.small {
-  font-size: 13px;
-  color: #94a3b8;
-  text-align: center;
-  margin-top: 16px;
-}
+    .floating-note {
+      position: absolute;
+      top: -26px;
+      right: 18px;
+      background: #fff;
+      color: #0f172a;
+      border-radius: 18px;
+      padding: 14px 16px;
+      box-shadow: 0 24px 60px rgba(0,0,0,.28);
+      z-index: 5;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      max-width: 260px;
+      animation: float 3s ease-in-out infinite;
+    }
 
-.result-box {
-  background: #f0fdf4;
-  border: 1px solid #bbf7d0;
-  padding: 18px;
-  border-radius: 18px;
-  color: #166534;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
 
-@media(max-width: 600px) {
-  .quiz-container {
-    padding: 24px;
-    border-radius: 22px;
-  }
+    .floating-note .dot {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #dcfce7;
+      color: #15803d;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
 
-  h1 {
-    font-size: 25px;
-  }
-}
-</style>
+    .floating-note p { font-size: 13px; line-height: 1.3; color: #334155; }
+    .floating-note strong { color: #0f172a; }
+
+    .quiz-card {
+      width: 100%;
+      background: linear-gradient(180deg, #ffffff, #f8fafc);
+      color: #0f172a;
+      border-radius: 32px;
+      padding: 34px;
+      box-shadow: 0 35px 100px rgba(0,0,0,.45);
+      border: 1px solid rgba(255,255,255,.8);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quiz-card:before {
+      content: '';
+      position: absolute;
+      inset: 0 0 auto auto;
+      width: 210px;
+      height: 210px;
+      background: radial-gradient(circle, rgba(34,197,94,.22), transparent 65%);
+      pointer-events: none;
+    }
+
+    .secure {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #ecfdf5;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+      padding: 9px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 18px;
+      position: relative;
+    }
+
+    .card-title {
+      font-size: 29px;
+      line-height: 1.12;
+      letter-spacing: -.9px;
+      font-weight: 900;
+      margin-bottom: 12px;
+      position: relative;
+    }
+
+    .card-subtitle {
+      color: #475569;
+      font-size: 16px;
+      line-height: 1.5;
+      margin-bottom: 22px;
+      position: relative;
+    }
+
+    .pain-list {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    .pain {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      padding: 15px;
+      border-radius: 18px;
+      color: #334155;
+      font-weight: 700;
+      box-shadow: 0 8px 18px rgba(15,23,42,.04);
+    }
+
+    .check {
+      width: 27px;
+      height: 27px;
+      border-radius: 9px;
+      background: #dcfce7;
+      color: #15803d;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+      border-radius: 18px;
+      font-weight: 900;
+      font-size: 16px;
+      transition: .22s ease;
+    }
+
+    .cta {
+      width: 100%;
+      padding: 19px;
+      color: #07111f;
+      background: linear-gradient(90deg, #f59e0b, #facc15);
+      box-shadow: 0 16px 40px rgba(245,158,11,.34);
+      position: relative;
+    }
+
+    .cta:hover { transform: translateY(-3px); filter: brightness(1.03); }
+
+    .microcopy {
+      margin-top: 13px;
+      text-align: center;
+      color: #64748b;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .progress-top {
+      display: flex;
+      justify-content: space-between;
+      color: #64748b;
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 9px;
+    }
+
+    .progress {
+      height: 10px;
+      background: #e5e7eb;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .progress div {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #22c55e, #facc15);
+      transition: .3s;
+    }
+
+    .q-title {
+      font-size: 26px;
+      line-height: 1.18;
+      font-weight: 900;
+      letter-spacing: -.6px;
+      margin-bottom: 18px;
+    }
+
+    .options { display: grid; gap: 12px; }
+
+    .option {
+      width: 100%;
+      text-align: left;
+      padding: 17px;
+      border-radius: 18px;
+      border: 2px solid #e5e7eb;
+      background: #fff;
+      color: #0f172a;
+      font-weight: 800;
+      font-size: 15px;
+      box-shadow: 0 10px 22px rgba(15,23,42,.04);
+    }
+
+    .option:hover, .option.selected {
+      border-color: #22c55e;
+      background: #ecfdf5;
+      transform: translateY(-2px);
+    }
+
+    .nav { display: flex; gap: 12px; margin-top: 22px; }
+    .nav button { padding: 16px; flex: 1; }
+    .back { background: #e2e8f0; color: #334155; }
+    .next { background: #16a34a; color: #fff; box-shadow: 0 12px 28px rgba(22,163,74,.26); }
+
+    .result { display: none; text-align: center; }
+    .result .card-title { font-size: 30px; }
+
+    .result-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 18px;
+      margin: 18px 0 22px;
+      color: #334155;
+      text-align: left;
+      line-height: 1.65;
+      font-size: 14px;
+    }
+
+    .whatsapp {
+      width: 100%;
+      padding: 19px;
+      color: #fff;
+      background: linear-gradient(90deg, #16a34a, #25d366);
+      box-shadow: 0 16px 38px rgba(37,211,102,.33);
+    }
+
+    @media (max-width: 900px) {
+      .page { padding: 18px; align-items: flex-start; }
+      .hero { grid-template-columns: 1fr; gap: 22px; }
+      .left { padding: 6px 0 0; }
+      .brand { margin-bottom: 22px; }
+      .lead { font-size: 17px; }
+      .trust-row { grid-template-columns: 1fr; }
+      .floating-note { display: none; }
+      .quiz-card { padding: 24px; border-radius: 26px; }
+      .card-title { font-size: 25px; }
+      h1 { letter-spacing: -1.7px; }
+    }
+  </style>
 </head>
-
 <body>
+  <main class="page">
+    <section class="hero">
+      <div class="left">
+        <div class="brand">
+          <div class="brand-mark">P+</div>
+          <div>PrevMais <small>Assessoria Previdenciária</small></div>
+        </div>
 
-<div class="quiz-container">
+        <div class="eyebrow">✓ Análise rápida e confidencial</div>
+        <h1>Seu benefício do <span class="gold">INSS</span> foi negado ou está travado?</h1>
+        <p class="lead">Responda um quiz rápido e veja se seu caso pode seguir para análise de auxílio-doença, acidente/sequela ou aposentadoria.</p>
 
-  <div class="logo">
-    <div class="logo-icon">P+</div>
-    <div class="logo-text">
-      <strong>PrevMais</strong>
-      <span>ASSESSORIA PREVIDENCIÁRIA</span>
-    </div>
-  </div>
+        <div class="trust-row">
+          <div class="trust"><b>⚡ Menos de 2 minutos</b><span>Perguntas simples para identificar seu caso.</span></div>
+          <div class="trust"><b>📲 Resultado no WhatsApp</b><span>Você já envia tudo organizado para atendimento.</span></div>
+          <div class="trust"><b>🔒 Dados protegidos</b><span>Suas respostas são usadas apenas para análise inicial.</span></div>
+        </div>
+      </div>
 
-  <div class="badge">🔒 Análise rápida e confidencial</div>
+      <div class="card-wrap">
+        <div class="floating-note">
+          <div class="dot">!</div>
+          <p><strong>Muita gente perde prazo</strong> depois da negativa do INSS. Verifique seu caso agora.</p>
+        </div>
 
-  <div class="progress">
-    <div class="progress-bar" id="bar"></div>
-  </div>
+        <div class="quiz-card">
+          <div id="start">
+            <div class="secure">🔒 100% confidencial</div>
+            <h2 class="card-title">Descubra se vale a pena analisar seu caso</h2>
+            <p class="card-subtitle">Ideal para quem teve benefício negado, está afastado, sofreu acidente ou tem dúvida na aposentadoria.</p>
 
-  <div id="q1">
-    <h1>Você já deu entrada no benefício pelo INSS?</h1>
-    <p>Essa informação ajuda a entender se o seu caso ainda está em análise, foi negado ou pode seguir para uma nova etapa.</p>
+            <div class="pain-list">
+              <div class="pain"><div class="check">✓</div> Auxílio-doença negado ou em análise</div>
+              <div class="pain"><div class="check">✓</div> Acidente com sequela ou limitação</div>
+              <div class="pain"><div class="check">✓</div> Aposentadoria com dúvida, erro ou demora</div>
+            </div>
 
-    <button class="option" onclick="next('Já dei entrada no INSS')">✅ Sim, já dei entrada</button>
-    <button class="option" onclick="next('Ainda não dei entrada')">📄 Ainda não dei entrada</button>
-  </div>
+            <button class="cta" onclick="startQuiz()">COMEÇAR MINHA ANÁLISE AGORA →</button>
+            <div class="microcopy">Não é consulta jurídica definitiva. A análise depende dos documentos e requisitos do caso.</div>
+          </div>
 
-  <div id="q2" class="hidden">
-    <h1>Qual situação mais parece com o seu caso?</h1>
-    <p>Escolha a opção mais próxima da sua realidade hoje.</p>
+          <div id="quiz" style="display:none">
+            <div class="progress-top"><span id="stepText">Pergunta 1</span><span id="percentText">25%</span></div>
+            <div class="progress"><div id="bar"></div></div>
+            <div id="qbox"></div>
+            <div class="nav">
+              <button class="back" onclick="back()">Voltar</button>
+              <button class="next" onclick="next()">Continuar</button>
+            </div>
+          </div>
 
-    <button class="option" onclick="next('Auxílio-acidente')">🦾 Sofri acidente e fiquei com sequela ou limitação</button>
-    <button class="option" onclick="next('Acidente de trabalho')">⚠️ Foi acidente de trabalho</button>
-    <button class="option" onclick="next('Aposentadoria')">👵 Tenho dúvida, erro ou demora na aposentadoria</button>
-    <button class="option" onclick="next('Benefício negado ou travado')">❌ Meu benefício foi negado ou está travado</button>
-  </div>
-
-  <div id="q3" class="hidden">
-    <h1>Você possui algum documento médico ou decisão do INSS?</h1>
-    <p>Laudo, atestado, CAT, carta de indeferimento ou comprovante do pedido ajudam na análise inicial.</p>
-
-    <button class="option" onclick="next('Possui laudo ou documento')">✅ Sim, tenho documento</button>
-    <button class="option" onclick="next('Não possui documento ainda')">❌ Não tenho ainda</button>
-    <button class="option" onclick="next('Não sei informar')">🤔 Não sei informar</button>
-  </div>
-
-  <div id="q4" class="hidden">
-    <h1>Seu caso pode ser analisado pela nossa equipe</h1>
-
-    <div class="result-box">
-      Pré-análise concluída. Agora envie suas informações pelo WhatsApp para orientação inicial.
-    </div>
-
-    <a id="whatsapp" target="_blank">
-      <button class="cta">FALAR COM A PREVMAIS AGORA →</button>
-    </a>
-
-    <div class="small">
-      A análise inicial não garante concessão do benefício. Depende dos documentos e requisitos do caso.
-    </div>
-  </div>
-
-</div>
+          <div id="result" class="result">
+            <div class="secure">✅ Respostas salvas</div>
+            <h2 class="card-title">Seu caso precisa ser analisado com atenção</h2>
+            <p class="card-subtitle">Envie suas respostas no WhatsApp para receber orientação sobre o próximo passo.</p>
+            <div class="result-card" id="summary"></div>
+            <button class="whatsapp" onclick="send()">ENVIAR NO WHATSAPP →</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
 <script>
-let respostas = [];
-let etapa = 1;
+const number = '5547992695929';
 
-function next(resposta) {
-  respostas.push(resposta);
+const qs = [
+  {k:'Benefício',q:'Qual situação mais parece com a sua?',o:['Auxílio-doença negado ou parado','Acidente com sequela ou limitação','Aposentadoria negada, atrasada ou com dúvida','Ainda não sei qual benefício pedir']},
+  {k:'Pedido no INSS',q:'Você já fez algum pedido no INSS?',o:['Sim, e foi negado','Sim, ainda está em análise','Ainda não fiz o pedido','Já recebo, mas tenho dúvida no valor']},
+  {k:'Documentos',q:'Você possui documentos do seu caso?',o:['Tenho laudos, exames ou atestados','Tenho carta de indeferimento do INSS','Tenho alguns documentos','Ainda não tenho documentos']},
+  {k:'Urgência',q:'O que você mais precisa agora?',o:['Saber se ainda tenho direito','Recorrer de uma negativa','Dar entrada do jeito certo','Conferir aposentadoria ou valores']}
+];
 
-  document.getElementById('q' + etapa).classList.add('hidden');
-  etapa++;
+let step = 0;
+let ans = {};
 
-  document.getElementById('bar').style.width = (etapa * 25) + '%';
-
-  if (etapa < 4) {
-    document.getElementById('q' + etapa).classList.remove('hidden');
-  } else {
-    final();
-  }
+function startQuiz(){
+  document.getElementById('start').style.display='none';
+  document.getElementById('quiz').style.display='block';
+  render();
 }
 
-function final() {
-  const numero = "5547920030770";
+function render(){
+  const q = qs[step];
+  let html = `<div class="q-title">${q.q}</div><div class="options">`;
 
-  let texto = "Olá, quero fazer uma análise do meu caso pelo site da PrevMais.%0A%0A";
-  texto += "1. Entrada no INSS: " + respostas[0] + "%0A";
-  texto += "2. Situação: " + respostas[1] + "%0A";
-  texto += "3. Documentos: " + respostas[2];
+  q.o.forEach(opt => {
+    html += `<button class="option ${ans[q.k] === opt ? 'selected' : ''}" onclick="select('${q.k}', '${opt.replace(/'/g, "\\'")}')">${opt}</button>`;
+  });
 
-  document.getElementById('whatsapp').href = "https://wa.me/" + numero + "?text=" + texto;
-  document.getElementById('q4').classList.remove('hidden');
+  html += `</div>`;
+  document.getElementById('qbox').innerHTML = html;
+
+  const pct = Math.round(((step + 1) / qs.length) * 100);
+  document.getElementById('bar').style.width = pct + '%';
+  document.getElementById('stepText').innerText = `Pergunta ${step + 1} de ${qs.length}`;
+  document.getElementById('percentText').innerText = pct + '%';
+}
+
+function select(k,v){ ans[k] = v; render(); }
+
+function next(){
+  if(!ans[qs[step].k]) return;
+  if(step < qs.length - 1){ step++; render(); }
+  else show();
+}
+
+function back(){
+  if(step > 0){ step--; render(); }
+}
+
+function show(){
+  document.getElementById('quiz').style.display='none';
+  document.getElementById('result').style.display='block';
+  let txt = '<strong>Resumo enviado para análise:</strong><br><br>';
+  Object.keys(ans).forEach(k => { txt += `<strong>${k}:</strong> ${ans[k]}<br>`; });
+  document.getElementById('summary').innerHTML = txt;
+}
+
+function send(){
+  let msg = 'Olá, acabei de preencher a análise sobre meu caso no INSS.%0A%0A';
+  Object.keys(ans).forEach(k => { msg += `${k}: ${ans[k]}%0A`; });
+  msg += '%0APode me orientar sobre o próximo passo?';
+  window.location.href = `https://wa.me/${number}?text=${msg}`;
 }
 </script>
-
 </body>
 </html>
