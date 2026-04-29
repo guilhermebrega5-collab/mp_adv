@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
@@ -20,6 +21,7 @@
   src="https://www.facebook.com/tr?id=4400662290150866&ev=PageView&noscript=1"
   /></noscript>
   <!-- End Meta Pixel Code -->
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PrevMais | Análise INSS</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -437,7 +439,7 @@
               <div class="pain"><div class="check">✓</div> Aposentadoria com dúvida, erro ou demora</div>
             </div>
 
-            <button class="cta" onclick="trackLead(); startQuiz()">COMEÇAR MINHA ANÁLISE AGORA →</button>
+            <button class="cta" onclick="trackEvent('Lead'); startQuiz()">COMEÇAR MINHA ANÁLISE AGORA →</button>
             <div class="microcopy">Não é consulta jurídica definitiva. A análise depende dos documentos e requisitos do caso.</div>
           </div>
 
@@ -456,7 +458,7 @@
             <h2 class="card-title">Seu caso precisa ser analisado com atenção</h2>
             <p class="card-subtitle">Envie suas respostas no WhatsApp para receber orientação sobre o próximo passo.</p>
             <div class="result-card" id="summary"></div>
-            <button class="whatsapp" onclick="trackContact(); send()">ENVIAR NO WHATSAPP →</button>
+            <button class="whatsapp" onclick="send()">ENVIAR NO WHATSAPP →</button>
           </div>
         </div>
       </div>
@@ -465,19 +467,6 @@
 
 <script>
 const number = '5547992695929';
-
-function trackLead(){
-  if (typeof fbq === 'function') {
-    fbq('track', 'Lead');
-  }
-}
-
-function trackContact(){
-  if (typeof fbq === 'function') {
-    fbq('track', 'Contact');
-  }
-}
-
 
 const qs = [
   {k:'Benefício',q:'Qual situação mais parece com a sua?',o:['Auxílio-doença negado ou parado','Acidente com sequela ou limitação','Aposentadoria negada, atrasada ou com dúvida','Ainda não sei qual benefício pedir']},
