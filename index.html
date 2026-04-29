@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
@@ -21,7 +20,6 @@
   src="https://www.facebook.com/tr?id=4400662290150866&ev=PageView&noscript=1"
   /></noscript>
   <!-- End Meta Pixel Code -->
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PrevMais | Análise INSS</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -439,7 +437,7 @@
               <div class="pain"><div class="check">✓</div> Aposentadoria com dúvida, erro ou demora</div>
             </div>
 
-            <button class="cta" onclick="trackEvent('Lead'); startQuiz()">COMEÇAR MINHA ANÁLISE AGORA →</button>
+            <button class="cta" onclick="trackLeadAndStartQuiz()">COMEÇAR MINHA ANÁLISE AGORA →</button>
             <div class="microcopy">Não é consulta jurídica definitiva. A análise depende dos documentos e requisitos do caso.</div>
           </div>
 
@@ -466,6 +464,18 @@
   </main>
 
 <script>
+
+function trackEvent(eventName){
+  if (typeof fbq === 'function') {
+    fbq('track', eventName);
+  }
+}
+
+function trackLeadAndStartQuiz(){
+  trackEvent('Lead');
+  startQuiz();
+}
+
 const number = '5547992695929';
 
 const qs = [
@@ -514,6 +524,7 @@ function back(){
 }
 
 function show(){
+  trackEvent('CompleteRegistration');
   document.getElementById('quiz').style.display='none';
   document.getElementById('result').style.display='block';
   let txt = '<strong>Resumo enviado para análise:</strong><br><br>';
@@ -522,6 +533,7 @@ function show(){
 }
 
 function send(){
+  trackEvent('Contact');
   let msg = 'Olá, acabei de preencher a análise sobre meu caso no INSS.%0A%0A';
   Object.keys(ans).forEach(k => { msg += `${k}: ${ans[k]}%0A`; });
   msg += '%0APode me orientar sobre o próximo passo?';
