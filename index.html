@@ -532,10 +532,12 @@ function show(){
 }
 
 function send(){
-  trackEvent('Contact');
+  trackEvent('Lead'); // 🔥 agora o Meta aprende certo
+
   let msg = 'Olá, acabei de preencher a análise sobre meu caso no INSS.%0A%0A';
   Object.keys(ans).forEach(k => { msg += `${k}: ${ans[k]}%0A`; });
   msg += '%0APode me orientar sobre o próximo passo?';
+
   window.location.href = `https://wa.me/${number}?text=${msg}`;
 }
 </script>
